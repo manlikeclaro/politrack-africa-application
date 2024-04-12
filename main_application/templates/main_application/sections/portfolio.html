@@ -9,18 +9,20 @@
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
             <div class="row justify-content-center">
-                <div class="col-lg-4 col-md-6 portfolio-item">
-                    <div class="card border-0 rounded-3 shadow">
-                        <a href="{% url 'home' %}">
-                            <img src="{% static 'main_application/img/hero-bg.jpg' %}" class="card-img-top"
-                                 alt="Blog Post Image">
-                        </a>
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="{% url 'home' %}" class="text-decoration-none text-dark">Blog
-                                Post Title</a></h5>
+                {% for blog in blogs %}
+                    <div class="col-lg-4 col-md-6 portfolio-item">
+                        <div class="card border-0 rounded-3 shadow">
+                            <a href="{% url 'blog-details' blog.slug %}">
+                                <img src="{{ blog.image.url }}" class="card-img-top" alt="{{ blog.title }}">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="{% url 'blog-details' blog.slug %}" class="text-decoration-none text-dark">
+                                        {{ blog.title }}</a></h5>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
 
             </div>
         </div>

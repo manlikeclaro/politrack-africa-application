@@ -8,7 +8,8 @@ from main_application.models import Report, Blog
 class IndexView(View):
     def get(self, request):
         reports = Report.objects.all().order_by('-release_date', '-id')[:3]
-        context = {'reports': reports}
+        blogs = Blog.objects.all().order_by('-created_at', '-id')[:3]
+        context = {'reports': reports, 'blogs': blogs}
         return render(request, 'main_application/index.html', context)
 
 
