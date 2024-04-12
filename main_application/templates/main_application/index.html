@@ -1,0 +1,53 @@
+{% extends 'main_application/base.html' %}
+{% load static %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+
+    {% include 'main_application/partials/hero.html' %}
+
+    <main id="main">
+
+        <!-- ======= About Section ======= -->
+        {% include 'main_application/sections/about.html' %} <!-- End About Section -->
+
+        <!-- ======= Clients Section ======= -->
+        {#        {% include 'main_application/sections/clients.html' %} #}
+        <!-- End Clients Section -->
+
+        <!-- ======= Services Section ======= -->
+        {% include 'main_application/sections/services.html' %} <!-- End Services Section -->
+
+        <!-- ======= Features Section ======= -->
+        {% include 'main_application/sections/features.html' %}
+        <!-- End Features Section -->
+
+        <!-- ======= Cta Section ======= -->
+        {% include 'main_application/sections/cta.html' %} <!-- End Cta Section -->
+
+        <!-- ======= Reports Section ======= -->
+        {% include 'main_application/sections/reports.html' %} <!-- End Reports Section -->
+
+        <!-- ======= Blog/Portfolio Section ======= -->
+        {% include 'main_application/sections/portfolio.html' %} <!-- End Blog/Portfolio Section -->
+
+        <!-- ======= Counts Section ======= -->
+{#        {% include 'main_application/sections/counts.html' %} #}
+        <!-- End Counts Section -->
+
+        <!-- ======= Testimonials Section ======= -->
+        {% include 'main_application/sections/testimonials.html' %} <!-- End Testimonials Section -->
+
+        <!-- ======= Team Section ======= -->
+        {% include 'main_application/sections/team.html' %} <!-- End Team Section -->
+
+        <!-- ======= Contact Section ======= -->
+{#        {% include 'main_application/sections/contact.html' %} #}
+        <!-- End Contact Section -->
+
+    </main><!-- End #main -->
+
+{% endblock %}

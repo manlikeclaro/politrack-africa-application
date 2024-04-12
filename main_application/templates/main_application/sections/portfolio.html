@@ -1,0 +1,60 @@
+{% load static %}
+
+<section id="portfolio" class="portfolio">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2 class="text-black">Recent Blog Posts</h2>
+        </div>
+
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 portfolio-item">
+                    <div class="card border-0 rounded-3 shadow">
+                        <a href="{% url 'home' %}">
+                            <img src="{% static 'main_application/img/hero-bg.jpg' %}" class="card-img-top"
+                                 alt="Blog Post Image">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{% url 'home' %}" class="text-decoration-none text-dark">Blog
+                                Post Title</a></h5>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- View All Reports Link -->
+        <div class="text-center mt-4">
+            <a href="{% url 'blog' %}" class="text-secondary btn-link btn-lg rounded-pill px-4 py-2">View All Blogs</a>
+        </div>
+
+
+        {#        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">#}
+        {##}
+        {#            <div class="col-lg-4 col-md-6 portfolio-item" onclick="openLink('{% url 'home' %}')">#}
+        {##}
+        {#                <div class="portfolio-wrap rounded-3">#}
+        {#                    <img src="{% static 'main_application/img/hero-bg.jpg' %}" class="img-fluid" alt="">#}
+        {#                    <div class="portfolio-info">#}
+        {#                        <h4>Blog Post title</h4>#}
+        {#                        <p>Julia hart</p>#}
+        {#                        <div class="portfolio-links">#}
+        {#                            <a href="{% url 'home' %}" title="More Details"><i class="bx bx-link"></i></a>#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {##}
+        {#            <script>#}
+        {#                function openLink(url) {#}
+        {#                    window.location.href = url;#}
+        {#                }#}
+        {#            </script>#}
+        {##}
+        {##}
+        {#        </div>#}
+
+    </div>
+</section>
