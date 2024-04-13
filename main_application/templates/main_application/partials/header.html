@@ -9,15 +9,32 @@
 
         <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
-                <li><a class="nav-link {% if '/' == request.path %} active {% endif %}" href="{% url 'home' %}">Home</a></li>
+                <li><a class="nav-link {% if '/' == request.path %} active {% endif %}" href="{% url 'home' %}">Home</a>
+                </li>
                 <li><a class="nav-link scrollto" href="#about">About</a></li>
                 <li><a class="nav-link scrollto" href="#features">Services</a></li>
-                <li><a class="nav-link {% if 'report' in request.path %} active {% endif %}" href="{% url 'reports' %}">Reports</a></li>
-                <li><a class="nav-link {% if 'blog' in request.path %} active {% endif %}" href="{% url 'blog' %}">Blog</a></li>
-{#                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>#}
+                <li><a class="nav-link {% if 'report' in request.path %} active {% endif %}" href="{% url 'reports' %}">Reports</a>
+                </li>
+                <li><a class="nav-link {% if 'blog' in request.path %} active {% endif %}"
+                       href="{% url 'blog' %}">Blog</a></li>
+                {#                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>#}
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
+
+        <script>
+            // Get all navigation links with the 'active' class
+            const activeLinks = document.querySelectorAll('.nav-link.active');
+
+            // Loop through each active link
+            activeLinks.forEach(link => {
+                // Add a click event listener to prevent default behavior
+                link.addEventListener('click', function (event) {
+                    // Prevent the default link behavior (page reload)
+                    event.preventDefault();
+                });
+            });
+        </script>
 
     </div>
 </header><!-- End Header -->

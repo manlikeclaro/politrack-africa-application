@@ -8,14 +8,15 @@
 
         <div class="row">
             {% for report in reports %}
-                <div class="col-md-6 col-lg-4 mt-4" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="rounded-5 card shadow-sm">
+                <div class="col-md-6 col-lg-4 mt-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="rounded-5 card shadow border-secondary-subtle">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="icon me-3"><i class="bx bi-filetype-pdf"></i></div>
                                 <div>
-                                    <h4 class="card-title mb-0"><a href="{{ report.report_file.url }}" target="_blank"
-                                                                   download>Download</a></h4>
+                                    <h4 class="card-title mb-0">
+                                        <a href="{{ report.report_file.url }}" target="_blank" download>Download</a>
+                                    </h4>
                                     <p class="card-text mb-0">{{ report.report_name }}</p>
                                     <p class="card-text mb-0">{{ report.release_date }}</p>
                                 </div>
@@ -27,8 +28,9 @@
         </div>
 
         <!-- View All Reports Link -->
-        <div class="text-center mt-4">
-            <a href="{% url 'reports' %}" class="text-secondary btn-link btn-lg rounded-pill px-4 py-2">View All Reports</a>
+        <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="300">
+            <a href="{% url 'reports' %}" class="text-secondary btn-link btn-lg rounded-pill px-4 py-2">View All
+                Reports</a>
         </div>
 
 
