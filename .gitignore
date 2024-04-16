@@ -1,6 +1,9 @@
 # Virtual environment
 .venv
 
+# Django settings file
+politrackAfrica/settings.py
+
 # Ignore Django migration files
 **/migrations/
 

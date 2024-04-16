@@ -13,14 +13,17 @@
                 </li>
                 <li><a class="nav-link scrollto" href="#about">About</a></li>
                 <li><a class="nav-link scrollto" href="#features">Services</a></li>
-                <li><a class="nav-link {% if 'report' in request.path %} active {% endif %}" href="{% url 'reports' %}">Reports</a>
-                </li>
+                <li><a class="nav-link {% if 'report' in request.path %} active {% endif %}"
+                       href="{% url 'reports' %}">Reports</a></li>
                 <li><a class="nav-link {% if 'blog' in request.path %} active {% endif %}"
                        href="{% url 'blog' %}">Blog</a></li>
-                {#                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>#}
+                {#                <li><a class="nav-link {% if 'contact' in request.path %} active {% endif %}"#}
+                {#                       href="{% url 'contact' %}">Contact</a></li>#}
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
+
+        <a href="{% url 'contact' %}" class="get-started-btn"><span class="fw-bold">Get Started</span></a>
 
         <script>
             // Get all navigation links with the 'active' class
