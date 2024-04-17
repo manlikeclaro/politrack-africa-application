@@ -31,7 +31,7 @@
                     <div class="col-lg-12">
 
                         <article class="blog-details rounded px-4">
-                            <h2 class="title mb-4 ">{{ blog.title }}</h2>
+                            <h3 class="section-title mb-2 ">{{ blog.title }}</h3>
 
                             <div class="post-img">
 {#                                <img src="{% static 'main_application/img/hero-bg.jpg' %}" alt=""#}
@@ -50,8 +50,8 @@
                                 </ul>
                             </div><!-- End meta top -->
 
-
-                            <div class="content mt-4">
+                            <hr>
+                            <div class="content mt-0">
 {#                                <p class="mb-0">{{ blog.content | linebreaks }}</p>#}
                                 <p class="mb-0">{{ blog.content | safe }}</p>
                             </div><!-- End post content -->
