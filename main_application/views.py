@@ -1,11 +1,9 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from django.utils.decorators import method_decorator
 from django.views import View
 
 from main_application.forms import ContactForm
@@ -25,7 +23,7 @@ class BlogView(View):
     def get(self, request):
         blogs = Blog.objects.all().order_by('-created_at')
         context = {'blogs': blogs}
-        return render(request, 'main_application/blog.html', context)
+        return render(request, 'main_application/all-blogs.html', context)
 
 
 class BlogDetails(View):
@@ -62,8 +60,8 @@ class ContactView(View):
                 send_mail(
                     subject=subject,
                     message=f'{name} - {email}\n{message}',
-                    from_email=email,
-                    recipient_list=[settings.EMAIL_HOST_USER, 'kamerelinda14@gmail.com'],
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[settings.EMAIL_HOST_USER, email],
                     fail_silently=False,
                 )
 

@@ -1,0 +1,36 @@
+{% load static %}
+
+<section id="portfolio" class="portfolio">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2 class="text-black">Recent Blog Posts</h2>
+        </div>
+
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+            <div class="row justify-content-center">
+                {% for blog in blogs %}
+                    <div class="col-lg-4 col-md-6 portfolio-item">
+                        <div class="card border-0 rounded-3 shadow">
+                            <a href="{% url 'blog-details' blog.slug %}">
+                                <img src="{{ blog.image.url }}" class="card-img-top" alt="{{ blog.title }}">
+                            </a>
+                            <div class="card-body" style="font-size: 14px; font-weight: 600;">
+                                <p class="text-muted bi-calendar-date mb-0"> {{ blog.created_at|date:"F d, Y" }}</p>
+                                <p class="card-title">
+                                    <a href="{% url 'blog-details' blog.slug %}" class="text-decoration-none text-dark">
+                                        {{ blog.title }}</a></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- View All Reports Link -->
+        <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="300">
+            <a href="{% url 'blog' %}" class="btn btn-secondary btn-sm rounded-pill px-4 py-2">View All Blogs</a>
+        </div>
+
+    </div>
+</section>

@@ -13,7 +13,9 @@
             <div class="container">
 
                 <div class="d-flex justify-content-between align-items-center">
-                    <h2>All Blogs</h2>
+                    <ol>
+                        <li>Blog Count ({{ blogs.count }})</li>
+                    </ol>
                 </div>
 
             </div>
@@ -22,20 +24,24 @@
         <section class="inner-page">
             <div class="container">
 
+                <div class="section-title">
+                    <h2 class="text-black">Blogs</h2>
+                </div>
+
                 <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
                     <div class="row justify-content-center">
                         {% for blog in blogs %}
-                            <div class="col-lg-4 col-md-6 mb-3 portfolio-item">
+                            <div class="col-lg-4 col-md-6 portfolio-item">
                                 <div class="card border-0 rounded-3 shadow">
                                     <a href="{% url 'blog-details' blog.slug %}">
                                         <img src="{{ blog.image.url }}" class="card-img-top" alt="{{ blog.title }}">
                                     </a>
-                                    <div class="card-body">
-                                        <p class="text-muted mb-0">{{ blog.created_at|date:"F d, Y" }}</p>
-                                        <h5 class="card-title">
+                                    <div class="card-body" style="font-size: 14px; font-weight: 600;">
+                                        <p class="text-muted bi-calendar-date mb-0"> {{ blog.created_at|date:"F d, Y" }}</p>
+                                        <p class="card-title">
                                             <a href="{% url 'blog-details' blog.slug %}"
                                                class="text-decoration-none text-dark">
-                                                {{ blog.title }}</a></h5>
+                                                {{ blog.title }}</a></p>
                                     </div>
                                 </div>
                             </div>

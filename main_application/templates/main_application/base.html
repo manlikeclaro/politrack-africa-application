@@ -31,6 +31,8 @@
     <!-- Template Main CSS File -->
     <link href="{% static 'main_application/css/style.css' %}" rel="stylesheet">
 
+    {% block scripts %}  {% endblock %}
+
     <!-- Google Tag Manager -->
     <script>(function (w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -53,9 +55,7 @@
 
 {% include 'main_application/partials/header.html' %}
 
-{% block content %}
-
-{% endblock %}
+{% block content %}   {% endblock %}
 
 {% include 'main_application/partials/footer.html' %}
 
