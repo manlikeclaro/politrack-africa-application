@@ -26,7 +26,7 @@ class Blog(models.Model):
     # content = models.TextField()
     # content = RichTextField()
     content = CKEditor5Field(config_name='extends', null=True, default='')
-    image = models.ImageField(upload_to='media', null=True)
+    image = models.ImageField(upload_to='media', default='media/default-blog-img.png', null=True)
     slug = models.SlugField(default='', unique=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
