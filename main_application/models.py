@@ -1,4 +1,3 @@
-from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
@@ -24,7 +23,6 @@ class Report(models.Model):
 class Blog(models.Model):
     title = models.CharField(max_length=200)
     # content = models.TextField()
-    # content = RichTextField()
     content = CKEditor5Field(config_name='extends', null=True, default='')
     image = models.ImageField(upload_to='media', default='media/default-blog-img.png', null=True)
     slug = models.SlugField(default='', unique=True)

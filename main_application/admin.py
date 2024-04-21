@@ -34,6 +34,8 @@ class BlogAdmin(admin.ModelAdmin):
         return True
 
     def has_delete_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True  # Superuser can delete any blog
         if obj is not None and obj.author != request.user:
             return False
         return True
