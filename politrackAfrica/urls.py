@@ -25,4 +25,13 @@ urlpatterns = [
     path('', include('main_application.urls')),
     path("ckeditor5/", include('django_ckeditor_5.urls'), name="ck_editor_5_upload_file"),
     path('baton/', include('baton.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+# Serve static and media files in development
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    # In production, static files should be served by Whitenoise or a dedicated web server
+    # Media files should be served by the web server directly
+    pass
