@@ -12,9 +12,6 @@ db.sqlite3
 # Static files
 static/
 
-# Media files
-media/
-
 # Compiled Python files
 *.pyc
 __pycache__/

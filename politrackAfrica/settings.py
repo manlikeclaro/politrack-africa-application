@@ -94,7 +94,11 @@ if DEBUG:
 else:
     # Set the database configuration to use an external database URL
     DATABASES = {
-        'default': dj_database_url.parse(config('EXTERNAL_DB_URL'))
+        # 'default': dj_database_url.parse(config('EXTERNAL_DB_URL')),
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
 
 # Password validation
@@ -129,12 +133,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'assets'
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# WhiteNoise configuration
+WHITENOISE_USE_FINDERS = True
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 customColorPalette = [
     {
