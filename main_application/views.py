@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.views import View
 
 from main_application.forms import ContactForm
-from main_application.models import Report, Blog, CustomerLead
+from main_application.models import Report, Blog, CustomerMessage
 
 
 # Create your views here.
@@ -66,7 +66,7 @@ class ContactView(View):
                 )
 
                 # Save form data to the database
-                customer_lead = CustomerLead.objects.create(
+                customer_message = CustomerMessage.objects.create(
                     name=name,
                     email=email,
                     subject=subject,

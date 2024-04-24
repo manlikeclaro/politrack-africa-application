@@ -38,7 +38,7 @@ class Blog(models.Model):
         return self.title
 
 
-class CustomerLead(models.Model):
+class CustomerMessage(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     subject = models.TextField()
@@ -47,3 +47,6 @@ class CustomerLead(models.Model):
 
     def __str__(self):
         return f'{self.name} - {self.email}'
+
+    class Meta:
+        verbose_name_plural = "Customer Messages"

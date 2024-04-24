@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from main_application.models import Report, Blog, CustomerLead
+from main_application.models import Report, Blog, CustomerMessage
 
 
 # Register your models here.
@@ -41,7 +41,7 @@ class BlogAdmin(admin.ModelAdmin):
         return True
 
 
-@admin.register(CustomerLead)
-class CustomerLeadAdmin(admin.ModelAdmin):
+@admin.register(CustomerMessage)
+class CustomerMessageAdmin(admin.ModelAdmin):
     list_display = ('name', 'subject', 'date')
     readonly_fields = ('name', 'email', 'subject', 'message', 'date')
