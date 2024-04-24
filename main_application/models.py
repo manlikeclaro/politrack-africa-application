@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
@@ -24,7 +25,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=200)
     # content = models.TextField()
     content = CKEditor5Field(config_name='extends', null=True, default='')
-    image = models.ImageField(upload_to='media', default='media/default-blog-img.png', null=True)
+    image = CloudinaryField('image', null=True)
     slug = models.SlugField(default='', unique=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

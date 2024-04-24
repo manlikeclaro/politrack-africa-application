@@ -1,8 +1,11 @@
 from os import getenv
 from pathlib import Path
 
+import cloudinary
 import dj_database_url
 from decouple import config
+
+from cloudinary import uploader, api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,10 +46,12 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'main_application.apps.PolitrackMainConfig',
     'django_ckeditor_5',
     'baton.autodiscover',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -133,15 +138,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+# Define the URL and root directory for static files
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'assets'
 
+# Define the URL and root directory for media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# WhiteNoise configuration
-WHITENOISE_USE_FINDERS = True
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# Set STATICFILES_STORAGE to use WhiteNoise
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# WHITENOISE_USE_FINDERS = True
+
+# Configure Cloudinary credentials
+cloudinary.config(
+    cloud_name=config('CLOUD_NAME'),
+    api_key=config('API_KEY'),
+    api_secret=config('API_SECRET'),
+)
 
 customColorPalette = [
     {
