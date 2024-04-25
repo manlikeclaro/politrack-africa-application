@@ -14,7 +14,7 @@
 
                 <div class="d-flex justify-content-between align-items-center">
                     <ol>
-                        <li>Reports Count ({{ reports.count }})</li>
+                        <li></li>
                     </ol>
                 </div>
 
@@ -25,7 +25,7 @@
             <div class="container">
 
                 <div class="section-title">
-                    <h2 class="text-black">Live Reports</h2>
+                    <h2 class="text-black">Live Reports ({{ reports.count }})</h2>
                 </div>
 
                 <div class="row">
@@ -38,7 +38,11 @@
                                         <div class="icon me-3"><i class="bx bi-filetype-pdf"></i></div>
                                         <div>
                                             <h4 class="card-title mb-0">
-                                                <a href="{{ report.report_file.url }}" target="_blank">Download</a></h4>
+                                                {# <a href="{{ report.report_file.url }}" target="_blank">Download</a></h4>#}
+                                                <a href="{{ report.download_url }}"
+                                                   {% if report.download_url %}download{% endif %}
+                                                   {% if not report.download_url %}disabled{% endif %}>Download</a>
+                                            </h4>
                                             <p class="card-text mb-0">{{ report.report_name }}</p>
                                             <p class="card-text mb-0">{{ report.release_date }}</p>
                                             <p class="card-text mb-0 text-muted">
