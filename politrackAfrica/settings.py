@@ -22,7 +22,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 if DEBUG:
     ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['*', 'politrack-africa-application.onrender.com']
 
 # Email settings
 if DEBUG:
@@ -91,6 +91,7 @@ WSGI_APPLICATION = 'politrackAfrica.wsgi.application'
 if DEBUG:
     # Default database configuration using SQLite
     DATABASES = {
+        # 'default': dj_database_url.parse(config('EXTERNAL_DB_URL')),
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',

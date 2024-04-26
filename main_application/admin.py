@@ -10,9 +10,8 @@ class ReportAdmin(admin.ModelAdmin):
     readonly_fields = ('created_on', 'slug', 'cloudinary_asset_id', 'author')
 
     def save_model(self, request, obj, form, change):
-        # if not obj.pk:  # If it's a new object
-        #     obj.author = request.user
-        obj.author = request.user
+        if not obj.pk:  # If it's a new object
+            obj.author = request.user
         super().save_model(request, obj, form, change)
 
     def has_change_permission(self, request, obj=None):
