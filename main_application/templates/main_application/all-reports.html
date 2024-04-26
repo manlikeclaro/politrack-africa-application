@@ -42,7 +42,7 @@
 {#                                                   {% if report.download_url %}download{% endif %}#}
 {#                                                   {% if not report.download_url %}disabled{% endif %}>Download</a>#}
                                                 <a href="{{ report.report_file.url }}"
-                                                   {% if report.report_file.url %}download{% endif %}
+                                                   {% if report.report_file.url %}download target="_blank"{% endif %}
                                                    {% if not report.report_file.url %}disabled{% endif %}>Download</a>
                                             </h4>
                                             <p class="card-text mb-0">{{ report.report_name }}</p>
