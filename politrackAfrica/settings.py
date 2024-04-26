@@ -99,11 +99,11 @@ if DEBUG:
 else:
     # Set the database configuration to use an external database URL
     DATABASES = {
-        'default': dj_database_url.parse(config('EXTERNAL_DB_URL')),
-        # 'default': {
-        #     'ENGINE': 'django.db.backends.sqlite3',
-        #     'NAME': BASE_DIR / 'db.sqlite3',
-        # }
+        # 'default': dj_database_url.parse(config('EXTERNAL_DB_URL')),
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
 
 # Password validation

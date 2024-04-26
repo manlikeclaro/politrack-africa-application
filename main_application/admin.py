@@ -6,8 +6,28 @@ from main_application.models import Report, Blog, CustomerMessage
 # Register your models here.
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
-    list_display = ('report_name', 'release_date')
-    readonly_fields = ('created_on', 'slug', 'cloudinary_asset_id')
+    list_display = ('report_name', 'release_date', 'author')
+    readonly_fields = ('created_on', 'slug', 'cloudinary_asset_id', 'author')
+
+    def save_model(self, request, obj, form, change):
+        # if not obj.pk:  # If it's a new object
+        #     obj.author = request.user
+        obj.author = request.user
+        super().save_model(request, obj, form, change)
+
+    def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True  # Superuser can update all reports
+        if obj is not None and obj.author != request.user:
+            return False
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True  # Superuser can delete any report
+        if obj is not None and obj.author != request.user:
+            return False
+        return True
 
 
 @admin.register(Blog)

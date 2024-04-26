@@ -11,15 +11,17 @@ class Report(models.Model):
     report_name = models.CharField(max_length=256)
     report_file = models.FileField(upload_to='reports', null=True)
     cloudinary_asset_id = models.CharField(max_length=100, blank=True)  # Field to store the asset ID
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     release_date = models.DateField()
     slug = models.SlugField(default='')
     created_on = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.report_name)
-        if self.report_file:
-            result = cloudinary.uploader.upload(self.report_file, resource_type="raw")
-            self.cloudinary_asset_id = result.get('asset_id', '')  # Store the asset ID
+        if not self.cloudinary_asset_id:  # Check if asset ID is not set
+            if self.report_file:
+                result = cloudinary.uploader.upload(self.report_file, resource_type="raw")
+                self.cloudinary_asset_id = result.get('asset_id', '')  # Store the asset ID
         super().save()
 
     def __str__(self):
