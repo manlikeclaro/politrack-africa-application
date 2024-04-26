@@ -22,7 +22,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 if DEBUG:
     ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOSTS = ['*', 'politrack-africa-application.onrender.com']
+    ALLOWED_HOSTS = ['politrack-africa-application.onrender.com', '127.0.0.1', 'localhost']
 
 # Email settings
 if DEBUG:
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django_ckeditor_5',
     'baton.autodiscover',
     'cloudinary',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -141,21 +142,53 @@ USE_TZ = True
 
 # Define the URL and root directory for static files
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'assets'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Define the URL and root directory for media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Set STATICFILES_STORAGE to use WhiteNoise
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# WHITENOISE_USE_FINDERS = True
+if not DEBUG:
+    # Configure AWS credentials
+    AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME')
+    AWS_S3_FILE_OVERWRITE = False
+
+    # Set static and media URLs for S3
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+    # Set media files storage backend
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+    # Optional: Set custom directory for media files (if needed)
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
+    # Set static files storage backend
+    # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
+    # Optional: Set custom directory for static files (if needed)
+    # STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+
+    # STORAGES = {
+    #     # Set media files storage backend
+    #     'default': {
+    #         'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage'
+    #     },
+
+    #     # Set static files storage backend
+    #     'staticfiles': {
+    #         'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage'
+    #     },
+    # }
 
 # Configure Cloudinary credentials
 cloudinary.config(
     cloud_name=config('CLOUD_NAME'),
     api_key=config('API_KEY'),
     api_secret=config('API_SECRET'),
+    secure=True  # Ensure secure HTTPS URLs
 )
 
 customColorPalette = [
@@ -188,7 +221,7 @@ customColorPalette = [
 CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': ['heading', '|', 'bold', 'italic', 'link',
-                    'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
+                    'bulletedList', 'numberedList', 'blockQuote', ],
 
     },
     'extends': {

@@ -7,7 +7,7 @@ from main_application.models import Report, Blog, CustomerMessage
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
     list_display = ('report_name', 'release_date', 'author')
-    readonly_fields = ('created_on', 'slug', 'cloudinary_asset_id', 'author')
+    readonly_fields = ('created_on', 'slug', 'author')
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:  # If it's a new object

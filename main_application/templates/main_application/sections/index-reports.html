@@ -15,9 +15,12 @@
                                 <div class="icon me-3"><i class="bx bi-filetype-pdf"></i></div>
                                 <div>
                                     <h4 class="card-title mb-0">
-                                        <a href="{{ report.download_url }}"
-                                           {% if report.download_url %}download{% endif %}
-                                           {% if not report.download_url %}disabled{% endif %}>Download</a>
+{#                                        <a href="{{ report.download_url }}"#}
+{#                                           {% if report.download_url %}download{% endif %}#}
+{#                                           {% if not report.download_url %}disabled{% endif %}>Download</a>#}
+                                        <a href="{{ report.report_file.url }}"
+                                           {% if report.report_file.url %}download{% endif %}
+                                           {% if not report.report_file.url %}disabled{% endif %}>Download</a>
                                     </h4>
                                     <p class="card-text mb-0">{{ report.report_name }}</p>
                                     <p class="card-text mb-0">{{ report.release_date }}</p>
