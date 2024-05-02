@@ -10,25 +10,22 @@ from cloudinary import uploader, api
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY', )
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-if DEBUG:
-    ALLOWED_HOSTS = []
-else:
+ALLOWED_HOSTS = []
+
+if not DEBUG:
     ALLOWED_HOSTS = ['politrack-africa-application.onrender.com', '127.0.0.1', 'localhost']
 
 # Email settings
-if DEBUG:
-    DEFAULT_FROM_EMAIL = 'default_email@example.com'
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Use console email backend for local development
-else:
+DEFAULT_FROM_EMAIL = 'default_email@example.com'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Use console email backend for local development
+
+if not DEBUG:
     EMAIL_HOST = config('EMAIL_HOST', )
     EMAIL_PORT = config('EMAIL_PORT', )
     EMAIL_USE_TLS = config('EMAIL_USE_TLS', )
@@ -38,7 +35,6 @@ else:
     EMAIL_BACKEND = config('EMAIL_BACKEND', )  # Use SMTP email backend for production
 
 # Application definition
-
 INSTALLED_APPS = [
     'baton',
     'django.contrib.admin',
@@ -89,17 +85,17 @@ WSGI_APPLICATION = 'politrackAfrica.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-if DEBUG:
-    # Default database configuration using SQLite
-    DATABASES = {
-        # 'default': dj_database_url.parse(config('EXTERNAL_DB_URL')),
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+# Default database configuration for development
+DATABASES = {
+    # 'default': dj_database_url.parse(config('EXTERNAL_DB_URL')),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else:
-    # Set the database configuration to use an external database URL
+}
+
+# Set the database configuration for production
+if not DEBUG:
     DATABASES = {
         'default': dj_database_url.parse(config('EXTERNAL_DB_URL')),
         # 'default': {
@@ -112,29 +108,18 @@ else:
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
 ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Africa/Nairobi'
-
 USE_I18N = True
-
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
