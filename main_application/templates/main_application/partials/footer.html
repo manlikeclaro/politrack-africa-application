@@ -14,10 +14,8 @@
                             Nairobi, Kenya<br><br>
                             <strong>Phone:</strong> +254 713 777184 / +254 711 473886 / +254 702 155633<br>
                             <strong>Email:</strong> info@politrackafrica.com<br>
-                            {% if request.user.is_authenticated %}
-                                <span class="credits">
-                                    <a href="{% url 'admin:index' %}" target="_blank">Admin Panel</a></span>
-                            {% endif %}
+                            <span class="credits">
+                                <a href="{% url 'admin:index' %}" target="_blank">Admin Panel</a></span>
                         </p>
                         <div class="social-links mt-3">
                             <a href="https://twitter.com/PolitrackAfrica" target="_blank" class="twitter">
