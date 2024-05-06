@@ -7,7 +7,7 @@
 **/migrations/
 
 # Ignore database files
-db.sqlite3
+#db.sqlite3
 
 # app level static files
 main_application/static/
