@@ -97,11 +97,11 @@ DATABASES = {
 # Set the database configuration for production
 if not DEBUG:
     DATABASES = {
-        'default': dj_database_url.parse(config('EXTERNAL_DB_URL')),
-        # 'default': {
-        #     'ENGINE': 'django.db.backends.sqlite3',
-        #     'NAME': BASE_DIR / 'db.sqlite3',
-        # }
+        # 'default': dj_database_url.parse(config('EXTERNAL_DB_URL')),
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
 
 # Password validation
@@ -133,40 +133,40 @@ STATIC_ROOT = BASE_DIR / 'static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-if not DEBUG:
-    # Configure AWS credentials
-    AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-    AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME')
-    AWS_S3_FILE_OVERWRITE = False
-
-    # Set static and media URLs for S3
-    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-
-    # Set media files storage backend
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-    # Optional: Set custom directory for media files (if needed)
-    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
-
-    # Set static files storage backend
-    # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-
-    # Optional: Set custom directory for static files (if needed)
-    # STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-
-    # STORAGES = {
-    #     # Set media files storage backend
-    #     'default': {
-    #         'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage'
-    #     },
-
-    #     # Set static files storage backend
-    #     'staticfiles': {
-    #         'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage'
-    #     },
-    # }
+# if not DEBUG:
+#     # Configure AWS credentials
+#     AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+#     AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+#     AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+#     AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME')
+#     AWS_S3_FILE_OVERWRITE = False
+#
+#     # Set static and media URLs for S3
+#     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+#
+#     # Set media files storage backend
+#     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#
+#     # Optional: Set custom directory for media files (if needed)
+#     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+#
+#     # Set static files storage backend
+#     # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+#
+#     # Optional: Set custom directory for static files (if needed)
+#     # STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+#
+#     # STORAGES = {
+#     #     # Set media files storage backend
+#     #     'default': {
+#     #         'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage'
+#     #     },
+#
+#     #     # Set static files storage backend
+#     #     'staticfiles': {
+#     #         'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage'
+#     #     },
+#     # }
 
 # Configure Cloudinary credentials
 cloudinary.config(
