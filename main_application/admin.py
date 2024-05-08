@@ -1,9 +1,49 @@
 from django.contrib import admin
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.admin import UserAdmin
 
 from main_application.models import Report, Blog, CustomerMessage
 
+# Unregister the default Models
+admin.site.unregister(User)
+admin.site.unregister(Group)
+
 
 # Register your models here.
+@admin.register(Group)
+class CustomGroupAdmin(admin.ModelAdmin):
+    list_display = ('name', 'num_users')
+
+    def num_users(self, obj):
+        return obj.user_set.count()
+
+    num_users.short_description = 'Number of Users'
+
+
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(id=request.user.id)
+
+    def get_fieldsets(self, request, obj=None):
+        if request.user.is_superuser:  # Superuser can change all fields
+            return super().get_fieldsets(request, obj=obj)
+        else:
+            return (
+                ('Account info', {'fields': ('username', 'password')}),
+                ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
+            )
+
+    def has_change_permission(self, request, obj=None):
+        if obj is not None:
+            if request.user.is_superuser or obj == request.user:
+                return True
+        return False
+
+
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
     list_display = ('report_name', 'release_date', 'author')
