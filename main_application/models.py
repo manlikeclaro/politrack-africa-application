@@ -50,10 +50,11 @@ class CustomerMessage(models.Model):
     email = models.EmailField()
     subject = models.TextField()
     message = models.TextField()
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now_add=True)
+    status = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.name} - {self.email}'
 
     class Meta:
-        verbose_name_plural = "Customer Messages"
+        verbose_name_plural = "Messages"

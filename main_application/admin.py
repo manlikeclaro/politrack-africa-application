@@ -22,25 +22,32 @@ class CustomGroupAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
+    list_display = UserAdmin.list_display + ('get_groups',)
+
+    def get_groups(self, obj):
+        if not obj.groups.exists():
+            return '- '
+        return ', '.join([group.name for group in obj.groups.all()])
+
+    get_groups.short_description = 'Groups'
+
     def get_queryset(self, request):
-        qs = super().get_queryset(request)
+        query = super().get_queryset(request)
         if request.user.is_superuser:
-            return qs
-        return qs.filter(id=request.user.id)
+            return query
+        return query.filter(id=request.user.id)
 
     def get_fieldsets(self, request, obj=None):
         if request.user.is_superuser:  # Superuser can change all fields
             return super().get_fieldsets(request, obj=obj)
         else:
             return (
-                ('Account info', {'fields': ('username', 'password')}),
-                ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
+                ('Account info', {'fields': ('username', 'first_name', 'last_name', 'email')}),
             )
 
     def has_change_permission(self, request, obj=None):
-        if obj is not None:
-            if request.user.is_superuser or obj == request.user:
-                return True
+        if request.user.is_superuser or obj == request.user:
+            return True
         return False
 
 
@@ -55,18 +62,16 @@ class ReportAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
     def has_change_permission(self, request, obj=None):
-        if request.user.is_superuser:
-            return True  # Superuser can update all reports
-        if obj is not None and obj.author != request.user:
-            return False
-        return True
+        if obj is not None:
+            if request.user.is_superuser or obj.author == request.user:
+                return True
+        return False
 
     def has_delete_permission(self, request, obj=None):
-        if request.user.is_superuser:
-            return True  # Superuser can delete any report
-        if obj is not None and obj.author != request.user:
-            return False
-        return True
+        if obj is not None:
+            if request.user.is_superuser or obj.author == request.user:
+                return True
+        return False
 
 
 @admin.register(Blog)
@@ -88,19 +93,29 @@ class BlogAdmin(admin.ModelAdmin):
     #     return query.filter(author=request.user)
 
     def has_change_permission(self, request, obj=None):
-        if obj is not None and obj.author != request.user:
-            return False
-        return True
+        if obj is not None:
+            if request.user.is_superuser or obj.author == request.user:
+                return True
+        return False
 
     def has_delete_permission(self, request, obj=None):
-        if request.user.is_superuser:
-            return True  # Superuser can delete any blog
-        if obj is not None and obj.author != request.user:
-            return False
-        return True
+        if obj is not None:
+            if request.user.is_superuser or obj.author == request.user:
+                return True
+        return False
 
 
 @admin.register(CustomerMessage)
 class CustomerMessageAdmin(admin.ModelAdmin):
-    list_display = ('name', 'subject', 'date')
+    list_display = ('name', 'subject', 'date', 'status')
     readonly_fields = ('name', 'email', 'subject', 'message', 'date')
+
+    def has_change_permission(self, request, obj=None):
+        if request.user:
+            return True  # Users can update message status
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True  # Superuser can delete any message
+        return False
