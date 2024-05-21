@@ -2,14 +2,18 @@ import cloudinary
 from decouple import config
 from django.conf import settings
 from django.contrib import messages
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.template.loader import render_to_string
+from django.templatetags.static import static
 from django.urls import reverse
+from django.utils.html import strip_tags
 from django.views import View
 
 from main_application.forms import ContactForm
 from main_application.models import Report, Blog, CustomerMessage
+
 
 # Retrieve Cloudinary cloud name from env variables
 # cloud_name = config('CLOUD_NAME')
@@ -86,14 +90,33 @@ class ContactView(View):
             message = form.cleaned_data['message']
 
             try:
-                # Send email
-                send_mail(
+                # # Send email
+                # send_mail(
+                #     subject=subject,
+                #     message=f'{name} - {email}\n{message}',
+                #     from_email=settings.DEFAULT_FROM_EMAIL,
+                #     recipient_list=[settings.EMAIL_HOST_USER, email],
+                #     fail_silently=False,
+                # )
+
+                context = {
+                    'logo_url': request.build_absolute_uri(static('main_application/img/email/logo.png')),
+                    'name': name,
+                }
+
+                # Render the email with the context
+                html_content = render_to_string('main_application/email.html', context)
+                text_content = strip_tags(html_content)
+
+                email_message = EmailMultiAlternatives(
                     subject=subject,
-                    message=f'{name} - {email}\n{message}',
+                    body=text_content,
                     from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.EMAIL_HOST_USER, email],
-                    fail_silently=False,
+                    to=[settings.EMAIL_HOST_USER, email],
                 )
+
+                email_message.attach_alternative(html_content, 'text/html')
+                email_message.send(fail_silently=False)
 
                 # Save form data to the database
                 customer_message = CustomerMessage.objects.create(
