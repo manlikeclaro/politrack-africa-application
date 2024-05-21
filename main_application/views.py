@@ -105,7 +105,8 @@ class ContactView(View):
                 }
 
                 # Render the email with the context
-                html_content = render_to_string('main_application/email.html', context)
+                # html_content = render_to_string('main_application/email.html', context)
+                html_content = render_to_string('main_application/email-template.html', context)
                 text_content = strip_tags(html_content)
 
                 email_message = EmailMultiAlternatives(
@@ -118,20 +119,21 @@ class ContactView(View):
                 email_message.attach_alternative(html_content, 'text/html')
                 email_message.send(fail_silently=False)
 
-                # Save form data to the database
-                customer_message = CustomerMessage.objects.create(
-                    name=name,
-                    email=email,
-                    subject=subject,
-                    message=message
-                )
+                if not settings.DEBUG:
+                    # Save form data to the database
+                    customer_message = CustomerMessage.objects.create(
+                        name=name,
+                        email=email,
+                        subject=subject,
+                        message=message
+                    )
 
                 # Return success response
-                return JsonResponse({'message': 'Your message has been sent. Thank you!'})
+                return JsonResponse({'message': 'Your message has been received. Thank you!'})
 
             except Exception as e:
                 # Return error response
-                return JsonResponse({'errors': 'An error occurred while sending the email.'}, status=500)
+                return JsonResponse({'errors': 'An error occurred while sending your message.'}, status=500)
 
         else:
             # Return form validation errors
