@@ -14,12 +14,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = config('DEBUG', default=True, cast=bool, )
 
 ALLOWED_HOSTS = []
 
 if not DEBUG:
-    ALLOWED_HOSTS = ['politrack-africa-application.onrender.com', '127.0.0.1', 'localhost']
+    # ALLOWED_HOSTS = ['politrack-africa-application.onrender.com', '127.0.0.1', 'localhost']
+    ALLOWED_HOSTS = ['*']
 
 # Email settings
 DEFAULT_FROM_EMAIL = 'default_email@example.com'
@@ -87,7 +88,6 @@ WSGI_APPLICATION = 'politrackAfrica.wsgi.application'
 
 # Default database configuration for development
 DATABASES = {
-    # 'default': dj_database_url.parse(config('EXTERNAL_DB_URL')),
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
@@ -97,11 +97,24 @@ DATABASES = {
 # Set the database configuration for production
 if not DEBUG:
     DATABASES = {
+        # Database URL configuration
         # 'default': dj_database_url.parse(config('EXTERNAL_DB_URL')),
+
+        # PostgreSQL / MySQL configuration
+        # 'default': {
+        #     'ENGINE': 'django.db.backends.postgresql',
+        #     'NAME': config('DB_NAME'),  # database name
+        #     'USER': config('DB_USER'),  # database username
+        #     'PASSWORD': config('DB_PASSWORD'),  # database password
+        #     'HOST': config('DB_HOST'),  # database host
+        #     'PORT': config('DB_PORT'),  # database port
+        # },
+
+        # SQLite configuration
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
-        }
+        },
     }
 
 # Password validation

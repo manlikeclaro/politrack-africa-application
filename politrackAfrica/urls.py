@@ -35,8 +35,10 @@ if settings.DEBUG:
 else:
     # In production, static files should be served by Whitenoise or a dedicated web server
     # Media files should be served by the web server directly
-    # pass
+
     urlpatterns += [
         # re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
         re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     ]
+
+    # pass

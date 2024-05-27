@@ -31,11 +31,11 @@ class CustomUserAdmin(UserAdmin):
 
     get_groups.short_description = 'Groups'
 
-    def get_queryset(self, request):
-        query = super().get_queryset(request)
-        if request.user.is_superuser:
-            return query
-        return query.filter(id=request.user.id)
+    # def get_queryset(self, request):
+    #     query = super().get_queryset(request)
+    #     if request.user.is_superuser:
+    #         return query
+    #     return query.filter(id=request.user.id)
 
     def get_fieldsets(self, request, obj=None):
         if request.user.is_superuser:  # Superuser can change all fields
@@ -55,6 +55,7 @@ class CustomUserAdmin(UserAdmin):
 class ReportAdmin(admin.ModelAdmin):
     list_display = ('report_name', 'release_date', 'author')
     readonly_fields = ('created_on', 'slug', 'author')
+    ordering = ('-release_date',)
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:  # If it's a new object
@@ -77,9 +78,10 @@ class ReportAdmin(admin.ModelAdmin):
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
     fields = ('title', 'image', 'content', 'author', 'slug', 'created_at', 'updated_at')
-    filter = ('author',)
     list_display = ('title', 'author', 'created_at')
     readonly_fields = ('created_at', 'updated_at', 'slug', 'author')
+    ordering = ('-created_at',)
+    filter = ('author',)
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:  # If it's a new object

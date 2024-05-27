@@ -30,8 +30,8 @@ class Report(models.Model):
 class Blog(models.Model):
     title = models.CharField(max_length=200)
     content = CKEditor5Field(config_name='extends', null=True, default='')
-    # image = CloudinaryField('image', null=True)
     image = models.ImageField(upload_to='media', default='default-blog-img.png', null=True)
+    # cloudinary_image = CloudinaryField('image', null=True)
     slug = models.SlugField(max_length=255, default='', unique=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
